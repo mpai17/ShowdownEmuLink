@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/mpai17/ShowdownEmu#readme",
   "dependencies": {
-    "puppeteer": "^24.38.0"
+    "puppeteer": "^24.38.0",
+    "ws": "^8.19.0"
   }
 }

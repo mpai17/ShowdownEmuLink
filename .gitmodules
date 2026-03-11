@@ -1,9 +1,6 @@
-[submodule "pokeyellow_showdown"]
-	path = pokeyellow_showdown
+[submodule "pokeRBY_showdown"]
+	path = pokeRBY_showdown
 	url = https://github.com/mpai17/pokeyellow.git
-[submodule "EmulatorJS"]
-	path = EmulatorJS
+[submodule "EmulatorJS_showdown"]
+	path = EmulatorJS_showdown
 	url = https://github.com/mpai17/EmulatorJS.git
-[submodule "pokemon-showdown-client"]
-	path = pokemon-showdown-client
-	url = https://github.com/mpai17/pokemon-showdown-client.git

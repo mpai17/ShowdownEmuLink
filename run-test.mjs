@@ -12,9 +12,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import puppeteer from 'puppeteer';
 
-const EMULATOR_DIR = path.join(import.meta.dirname, 'EmulatorJS');
+const EMULATOR_DIR = path.join(import.meta.dirname, 'EmulatorJS_showdown');
 const PORT = 8377;
-const PAGE_TIMEOUT = 360_000; // 6 min max per run
+const PAGE_TIMEOUT = 600_000; // 10 min max per run
 
 // ---------- simple static file server ----------
 
@@ -31,6 +31,7 @@ const MIME = {
 function serve(req, res) {
   const url = new URL(req.url, `http://localhost:${PORT}`);
   let filePath = path.join(EMULATOR_DIR, decodeURIComponent(url.pathname));
+  if (!filePath.startsWith(EMULATOR_DIR)) { res.writeHead(403); res.end(); return; }
   if (filePath.endsWith('/')) filePath += 'index.html';
   const ext = path.extname(filePath);
   fs.readFile(filePath, (err, data) => {
@@ -53,7 +54,7 @@ async function runOnce(browser, runNum) {
   page.on('console', msg => {
     const text = msg.text();
     logs.push(text);
-    // Stream all ShowdownBridge and Test lines to stdout
+    // Stream ShowdownBridge and Test lines to stdout
     if (text.startsWith('[ShowdownBridge]') || text.startsWith('[Test]') ||
         text.startsWith('Turn ') || text.startsWith('====') || text.startsWith('TOTAL'))
       console.log(text);
@@ -74,7 +75,7 @@ async function runOnce(browser, runNum) {
     });
   });
 
-  await page.goto(`http://localhost:${PORT}/showdown.html`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`http://localhost:${PORT}/test.html?test`, { waitUntil: 'domcontentloaded' });
   const completed = await done;
 
   await page.close();

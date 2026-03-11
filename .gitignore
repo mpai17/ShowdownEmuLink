@@ -1,2 +1,5 @@
 node_modules/
 pokeyellow/
+config.json
+pokemon-showdown-client/
+browser.log

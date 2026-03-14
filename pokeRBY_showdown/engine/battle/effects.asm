@@ -56,21 +56,37 @@ SleepEffect:
 	and a
 	jr nz, .didntAffect
 .setSleepCounter
+; In Showdown mode, use the counter value written by the JS bridge.
+; 1 = wake up immediately on this turn, 7 = stay asleep (bridge manages wake-up).
+	ld a, [wShowdownConnected]
+	and a
+	jr z, .normalSleepCounter
+	ld a, [wSD_SleepCounter]
+	and SLP_MASK
+	jr z, .defaultShowdownCounter ; fallback if bridge didn't set it
+	ld [de], a
+	jr .sleepCounterDone
+.defaultShowdownCounter
+	ld a, 7
+	ld [de], a
+	jr .sleepCounterDone
+.normalSleepCounter
 ; set target's sleep counter to a random number between 1 and 7
 	call BattleRandom
 	and SLP_MASK
-	jr z, .setSleepCounter
+	jr z, .normalSleepCounter
 	ld b, a
 	ld a, [wUnknownSerialFlag_d499]
 	and a
 	jr z, .asm_3f1ba ; XXX stadium stuff?
 	ld a, b
 	and $3
-	jr z, .setSleepCounter
+	jr z, .normalSleepCounter
 	ld b, a
 .asm_3f1ba
 	ld a, b
 	ld [de], a
+.sleepCounterDone
 	call PlayCurrentMoveAnimation2
 	ld hl, FellAsleepText
 	jp PrintText

@@ -1890,8 +1890,6 @@ wSerialPlayerDataBlock:: ; ds $1a8
 ; When a move is acting as an item, this is the ID of the item it's acting as.
 ; For example, out-of-battle Dig is executed using a fake Escape Rope item. In
 ; that case, this would be ESCAPE_ROPE.
-wPseudoItemID:: db
-
 wShowdownConnected:: db  ; 0 = offline (AI), non-zero = Showdown connected
 
 UNION
@@ -1906,12 +1904,14 @@ wSD_M1_Hits::    db  ; multi-hit count for first mover (0 = not multi-hit)
 wSD_M2_Hits::    db  ; multi-hit count for second mover
 wSD_M1_SubBreakHit:: db ; hit number on which M1's target sub breaks (0 = no break)
 wSD_M2_SubBreakHit:: db ; hit number on which M2's target sub breaks (0 = no break)
+wSD_SleepCounter:: db ; sleep counter for SleepEffect (1=wake immediately, 7=stay asleep)
 
 NEXTU
+; Non-battle variables — never used during link battles
+wPseudoItemID:: db   ; out-of-battle item ID (e.g. Dig as Escape Rope)
 wEvoStoneItemID:: db
-
 wSavedNPCMovementDirections2Index:: db
-	ds 6 ; padding to match Showdown overlay size
+	ds 6 ; padding to match Showdown branch size
 ENDU
 
 wPlayerName:: ds NAME_LENGTH

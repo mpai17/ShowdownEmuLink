@@ -15,6 +15,7 @@ See [`pokeRBY_showdown/INSTALL.md`](pokeRBY_showdown/INSTALL.md) for platform-sp
 ```bash
 git clone https://github.com/mpai17/ShowdownEmuLink.git
 cd ShowdownEmuLink
+git submodule update --init
 npm install
 ```
 
@@ -23,6 +24,7 @@ npm install
 ```bash
 cd pokeRBY_showdown
 make
+cd ..
 ```
 
 This produces `pokeyellow.gbc` and automatically copies it to `EmulatorJS_showdown/roms/`.
